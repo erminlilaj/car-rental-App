@@ -44,5 +44,8 @@ login() {
   );
 }
 
-  protected readonly register = register;
+  register(){
+    console.log("button clicked");
+    this.router.navigate(['register'])
+  }
 }

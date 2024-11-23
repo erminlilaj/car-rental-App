@@ -215,7 +215,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/CreateUserRequest"
+                                "$ref": "#/components/schemas/RegisterUserRequest"
                             }
                         }
                     },
@@ -689,7 +689,7 @@
                     }
                 }
             },
-            "CreateUserRequest": {
+            "RegisterUserRequest": {
                 "type": "object",
                 "properties": {
                     "username": {
@@ -710,13 +710,6 @@
                     "age": {
                         "type": "integer",
                         "format": "int32"
-                    },
-                    "userType": {
-                        "type": "string",
-                        "enum": [
-                            "ADMIN",
-                            "USER"
-                        ]
                     }
                 }
             },
@@ -772,6 +765,37 @@
                     "dailyFee": {
                         "type": "number",
                         "format": "double"
+                    }
+                }
+            },
+            "CreateUserRequest": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "surname": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "age": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "userType": {
+                        "type": "string",
+                        "enum": [
+                            "ADMIN",
+                            "USER"
+                        ]
                     }
                 }
             },
