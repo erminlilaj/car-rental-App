@@ -1,0 +1,11 @@
+.vehicle-list {
+    display: flex;
+    flex-wrap: wrap; /* Allows wrapping to the next row if there are too many cards */
+    justify-content: space-around; /* Adjusts spacing between cards */
+  }
+  
+  app-vehicle-card {
+    margin: 10px; /* space between the cards */
+    flex: 1 0 21%; /* Makes cards take up about 21% of the container width, adjust as needed */
+  }
+  

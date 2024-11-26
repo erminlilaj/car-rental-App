@@ -34,7 +34,8 @@ login() {
     (token) => {
       console.log('Login successful. Token:', token);
       localStorage.setItem('authToken', token);
-      this.router.navigate(['/dashboard']); // Navigate after successful login
+     // this.router.navigate(['/dashboard']); // Navigate after successful login
+     this.router.navigate(['/homepage']);
     },
     (error) => {
       console.error('Login failed:', error);
