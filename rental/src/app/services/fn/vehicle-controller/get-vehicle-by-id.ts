@@ -8,24 +8,24 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { VehicleEntity } from '../../models/vehicle-entity';
+import { VehicleResponse } from '../../models/vehicle-response';
 
 export interface GetVehicleById$Params {
   id: number;
 }
 
-export function getVehicleById(http: HttpClient, rootUrl: string, params: GetVehicleById$Params, context?: HttpContext): Observable<StrictHttpResponse<VehicleEntity>> {
+export function getVehicleById(http: HttpClient, rootUrl: string, params: GetVehicleById$Params, context?: HttpContext): Observable<StrictHttpResponse<VehicleResponse>> {
   const rb = new RequestBuilder(rootUrl, getVehicleById.PATH, 'get');
   if (params) {
     rb.path('id', params.id, {});
   }
 
   return http.request(
-    rb.build({ responseType: 'blob', accept: '*/*', context })
+    rb.build({ responseType: 'json', accept: 'application/json', context })
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<VehicleEntity>;
+      return r as StrictHttpResponse<VehicleResponse>;
     })
   );
 }

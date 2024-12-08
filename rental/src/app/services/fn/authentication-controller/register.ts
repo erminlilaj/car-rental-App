@@ -8,10 +8,10 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { CreateUserRequest } from '../../models/create-user-request';
+import { RegisterUserRequest } from '../../models/register-user-request';
 
 export interface Register$Params {
-      body: CreateUserRequest
+      body: RegisterUserRequest
 }
 
 export function register(http: HttpClient, rootUrl: string, params: Register$Params, context?: HttpContext): Observable<StrictHttpResponse<{

@@ -22,14 +22,16 @@ export function authenticate(http: HttpClient, rootUrl: string, params: Authenti
   }
 
   return http.request(
-    rb.build({ responseType: 'blob', accept: '*/*', context })
+    rb.build({ responseType: 'text', accept: '*/*', context })
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<{
+      return r.body as StrictHttpResponse<{
+        token: string; // Adjust based on your API's response format
       }>;
     })
   );
+  
 }
 
 authenticate.PATH = '/auth/login';

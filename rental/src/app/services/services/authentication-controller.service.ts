@@ -76,9 +76,13 @@ export class AuthenticationControllerService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  authenticate(params: Authenticate$Params, context?: HttpContext): Observable<string> {
+  authenticate(params: Authenticate$Params, context?: HttpContext): Observable<{
+}> {
     return this.authenticate$Response(params, context).pipe(
-      map((r: StrictHttpResponse<string>): string => r.body)
+      map((r: StrictHttpResponse<{
+}>): {
+} => r.body)
     );
   }
+
 }

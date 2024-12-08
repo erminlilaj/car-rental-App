@@ -13,6 +13,8 @@ import { StrictHttpResponse } from '../strict-http-response';
 
 import { cancelReservation } from '../fn/reservation-controller/cancel-reservation';
 import { CancelReservation$Params } from '../fn/reservation-controller/cancel-reservation';
+import { checkReservationAvailability } from '../fn/reservation-controller/check-reservation-availability';
+import { CheckReservationAvailability$Params } from '../fn/reservation-controller/check-reservation-availability';
 import { createReservation } from '../fn/reservation-controller/create-reservation';
 import { CreateReservation$Params } from '../fn/reservation-controller/create-reservation';
 import { getAllReservations } from '../fn/reservation-controller/get-all-reservations';
@@ -52,6 +54,31 @@ export class ReservationControllerService extends BaseService {
   createReservation(params: CreateReservation$Params, context?: HttpContext): Observable<ReservationResponse> {
     return this.createReservation$Response(params, context).pipe(
       map((r: StrictHttpResponse<ReservationResponse>): ReservationResponse => r.body)
+    );
+  }
+
+  /** Path part for operation `checkReservationAvailability()` */
+  static readonly CheckReservationAvailabilityPath = '/api/reservations/check-availability';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `checkReservationAvailability()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  checkReservationAvailability$Response(params: CheckReservationAvailability$Params, context?: HttpContext): Observable<StrictHttpResponse<boolean>> {
+    return checkReservationAvailability(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `checkReservationAvailability$Response()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  checkReservationAvailability(params: CheckReservationAvailability$Params, context?: HttpContext): Observable<boolean> {
+    return this.checkReservationAvailability$Response(params, context).pipe(
+      map((r: StrictHttpResponse<boolean>): boolean => r.body)
     );
   }
 

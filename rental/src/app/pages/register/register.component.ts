@@ -10,7 +10,8 @@ import { Router } from '@angular/router';
   selector: 'app-register',
   imports: [FormsModule,CommonModule],
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrl: './register.component.scss',
+  standalone: true
 })
 
 export class RegisterComponent {

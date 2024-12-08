@@ -9,7 +9,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-homepage',
   imports: [CommonModule,VehicleCardComponent],
   templateUrl: './homepage.component.html',
-  styleUrl: './homepage.component.scss'
+  styleUrl: './homepage.component.scss',
+  standalone: true
 })
 export class HomepageComponent implements OnInit {
   vehicleList: VehicleEntity[] = []; 

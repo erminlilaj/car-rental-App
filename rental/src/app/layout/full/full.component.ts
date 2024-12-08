@@ -6,7 +6,8 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-full',
   imports: [NavbarComponent,RouterOutlet],
   templateUrl: './full.component.html',
-  styleUrl: './full.component.scss'
+  styleUrl: './full.component.scss',
+  standalone: true
 })
 export class FullComponent {
 

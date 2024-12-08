@@ -6,6 +6,7 @@ import { HomepageComponent } from './pages/homepage/homepage.component';
 import { Component } from '@angular/core';
 import { NavbarComponent } from './layout/navbar/navbar.component';
 import { FullComponent } from './layout/full/full.component';
+import { ReservationComponent } from './pages/reservation/reservation.component';
 
 
 export const routes: Routes = [
@@ -17,7 +18,13 @@ export const routes: Routes = [
     path: '',
     component: HomepageComponent
     }
-  ]}
+  ]},
+  {path: 'reservation/:id', component: FullComponent,children: [
+    {
+    path: '',
+    component: ReservationComponent
+    }
+  ]},
 
   // { path: '/user/dashboard', component: FullComponent, children: [
   //   {

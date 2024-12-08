@@ -22,6 +22,7 @@ import { GetVehicleById$Params } from '../fn/vehicle-controller/get-vehicle-by-i
 import { updateVehicle } from '../fn/vehicle-controller/update-vehicle';
 import { UpdateVehicle$Params } from '../fn/vehicle-controller/update-vehicle';
 import { VehicleEntity } from '../models/vehicle-entity';
+import { VehicleResponse } from '../models/vehicle-response';
 
 @Injectable({ providedIn: 'root' })
 export class VehicleControllerService extends BaseService {
@@ -38,7 +39,7 @@ export class VehicleControllerService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getVehicleById$Response(params: GetVehicleById$Params, context?: HttpContext): Observable<StrictHttpResponse<VehicleEntity>> {
+  getVehicleById$Response(params: GetVehicleById$Params, context?: HttpContext): Observable<StrictHttpResponse<VehicleResponse>> {
     return getVehicleById(this.http, this.rootUrl, params, context);
   }
 
@@ -48,9 +49,9 @@ export class VehicleControllerService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getVehicleById(params: GetVehicleById$Params, context?: HttpContext): Observable<VehicleEntity> {
+  getVehicleById(params: GetVehicleById$Params, context?: HttpContext): Observable<VehicleResponse> {
     return this.getVehicleById$Response(params, context).pipe(
-      map((r: StrictHttpResponse<VehicleEntity>): VehicleEntity => r.body)
+      map((r: StrictHttpResponse<VehicleResponse>): VehicleResponse => r.body)
     );
   }
 

@@ -1,9 +1,11 @@
 <div class="card" style="width: 18rem;">
   <img src="https://picsum.photos/200" class="card-img-top" alt="Vehicle Image">
   <div class="card-body">
-    <h5 class="card-title">{{ vehicle.model }}</h5>
+    <h5 class="card-title">{{vehicle.brand}} {{ vehicle.model }}</h5>
     <p class="card-text">Gearbox: {{ vehicle.gearboxType }}</p>
     <p class="card-text">Daily Fee: {{ vehicle.dailyFee }}</p>
-    <a href="#" class="btn btn-primary">Check availability</a>
+    <a (click)="onReservation(vehicle.id)" class="btn btn-primary">
+      Book Now!
+    </a>
   </div>
 </div>

@@ -42,9 +42,9 @@
                     "200": {
                         "description": "OK",
                         "content": {
-                            "*/*": {
+                            "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/VehicleEntity"
+                                    "$ref": "#/components/schemas/VehicleResponse"
                                 }
                             }
                         }
@@ -390,6 +390,36 @@
                             "*/*": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ReservationResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/reservations/check-availability": {
+            "post": {
+                "tags": [
+                    "reservation-controller"
+                ],
+                "operationId": "checkReservationAvailability",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateReservationRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "boolean"
                                 }
                             }
                         }
@@ -854,6 +884,54 @@
                         "format": "int32"
                     },
                     "price": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            },
+            "VehicleResponse": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "brand": {
+                        "type": "string"
+                    },
+                    "model": {
+                        "type": "string"
+                    },
+                    "year": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "gearboxType": {
+                        "type": "string",
+                        "enum": [
+                            "AUTOMATIC",
+                            "MANUAL"
+                        ]
+                    },
+                    "fuelType": {
+                        "type": "string",
+                        "enum": [
+                            "DIESEL",
+                            "PETROL",
+                            "ELECTRIC"
+                        ]
+                    },
+                    "color": {
+                        "type": "string"
+                    },
+                    "vehicleStatus": {
+                        "type": "string",
+                        "enum": [
+                            "AVAILABLE",
+                            "MAINTENANCE"
+                        ]
+                    },
+                    "dailyFee": {
                         "type": "number",
                         "format": "double"
                     }

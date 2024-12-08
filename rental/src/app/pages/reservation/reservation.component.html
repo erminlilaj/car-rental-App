@@ -1,0 +1,52 @@
+<div class="container-fluid vehicle-card">
+    <div class="row align-items-center">
+      <!-- Image on the Left -->
+      <div class="col-md-4" >
+        <img src="https://picsum.photos/200" class="img-fluid" alt="Vehicle Image">
+      </div>
+      <!-- Info on the Right -->
+      <div class="col-md-8">
+        <h5 *ngIf="vehicle">{{ vehicle.brand }} {{ vehicle.model }}</h5>
+        <p *ngIf="vehicle">Gearboox: {{ vehicle.gearboxType }}</p>
+        <p *ngIf="vehicle">Daily Fee: ${{ vehicle.dailyFee }}</p>
+        
+
+        <!-- Date Range Calendar -->
+        <p-calendar 
+        [(ngModel)]="rangeDates"
+        selectionMode="range"
+        [readonlyInput]="true"
+        placeholder="Select date range"
+        dateFormat="dd/mm/yy"
+        [minDate]="minDate"
+        [showTime]="true"
+        [showSeconds]="false"
+        [hourFormat]="'24'"
+        [showButtonBar]="true"
+        [showClear]="true"
+        
+      />
+    
+    <!-- Availability Check Button -->
+    <button 
+      class="btn btn-primary mt-2" 
+      (click)="checkAvailability()"
+      [disabled]="!vehicle"
+    >
+      Check Availability
+    </button>
+    <button class="btn btn-success"
+    (click)="reserveVehicle()"
+    
+    > Reserve Vehicle</button>
+    
+    <!-- Availability Status -->
+    <div *ngIf="isAvailable" class="text-success mt-2">
+      Vehicle is available for the selected dates
+    </div>
+  </div>
+</div>
+
+<!-- Toast Notifications -->
+<p-toast />
+</div>

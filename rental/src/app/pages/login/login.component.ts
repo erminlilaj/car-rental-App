@@ -11,7 +11,8 @@ import {register} from '../../services/fn/authentication-controller/register';
   selector: 'app-login',
   imports: [FormsModule,CommonModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
+  standalone: true
 
 })
 export class LoginComponent {
@@ -31,7 +32,7 @@ login() {
   };
 
   this.authService.authenticate(params).subscribe(
-    (token) => {
+    (token: any) => {
       console.log('Login successful. Token:', token);
       localStorage.setItem('authToken', token);
      // this.router.navigate(['/dashboard']); // Navigate after successful login
