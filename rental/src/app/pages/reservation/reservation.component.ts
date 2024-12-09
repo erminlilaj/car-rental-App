@@ -8,7 +8,8 @@ import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { MessageService, ConfirmationService } from 'primeng/api';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
 
 @Component({
   selector: 'app-reservation',
@@ -17,11 +18,12 @@ import { MessageService } from 'primeng/api';
       FormsModule,
        ButtonModule,
       MessageModule,
-    ToastModule],
+    ToastModule,
+  ConfirmDialogModule],
   templateUrl: './reservation.component.html',
   styleUrls: ['./reservation.component.scss'],
   standalone: true,
-  providers: [MessageService]
+  providers: [MessageService,ConfirmationService]
 })
 export class ReservationComponent implements OnInit {
   rangeDates: Date[]=[];
@@ -33,7 +35,8 @@ minDate: Date = new Date();
   constructor(
     private vehicleService: VehicleControllerService,
     private reservationService: ReservationControllerService,
-    private messageService: MessageService 
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService
   ) {}
 
 
@@ -54,9 +57,6 @@ minDate: Date = new Date();
   }
 
   checkAvailability():void {
-    
-  
-    // Validate date selection
     if(!this.rangeDates || this.rangeDates.length !== 2) {
       this.messageService.add({
         severity: 'warn',
@@ -68,12 +68,6 @@ minDate: Date = new Date();
   
     const [startDate, endDate] = this.rangeDates;
   
-    // Detailed date logging
-    console.log('Start Date (Original):', startDate);
-    console.log('End Date (Original):', endDate);
-    console.log('Start Date (Formatted):', this.formatDateForBackend(startDate));
-    console.log('End Date (Formatted):', this.formatDateForBackend(endDate));
-  
     // Date validation
     if (startDate >= endDate) {
       this.messageService.add({
@@ -84,7 +78,7 @@ minDate: Date = new Date();
       return;
     }
   
-    // Vehicle validation
+    
     if(!this.vehicle){
       this.messageService.add({
         severity: 'error',
@@ -94,7 +88,7 @@ minDate: Date = new Date();
       return;
     }
   
-    // Prepare availability request
+    //create avaibility req for bE
     const availabilityRequest: CreateReservationRequest = {
       vehicleId: this.vehicle.id,
       startDate: this.formatDateForBackend(startDate),
@@ -157,40 +151,55 @@ reserveVehicle():void{
     return;
   }
     const [startDate,endDate]=this.rangeDates;
+//show confirm dialog before sending the request 
+this.confirmationService.confirm({
+  message: `Are you sure you want to reserve this vehicle from ${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}?`,
+  header: 'Confirm Reservation',
+  icon: 'pi pi-exclamation-triangle',
 
-    const reservationRequest: CreateReservationRequest={
+  accept: () => {
+    
+    const reservationRequest: CreateReservationRequest = {
       vehicleId: this.vehicle?.id,
       startDate: this.formatDateForBackend(startDate),
       endDate: this.formatDateForBackend(endDate)
     };
-console.log("Reservation request: ", JSON.stringify(reservationRequest));
-this.reservationService.createReservation({ body: reservationRequest })
-    .subscribe({
-      next: (response) => {
-        console.log('Reservation Response:', response);
-        
-        
-        this.messageService.add({
-          severity: 'success', 
-          summary: 'Reservation Successful', 
-          detail: `Vehicle reserved from ${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}`
-        });
 
-        
-        this.rangeDates = []; // Clear date selection
-        this.isAvailable = undefined; // Reset availability
-      },
-      error: (error) => {
-        console.error('Reservation Error:', error);
-        
-     
-        this.messageService.add({
-          severity: 'error', 
-          summary: 'Reservation Failed', 
-          detail: error.error?.message || 'Failed to make reservation. Please try again.'
-        });
-      }
+    this.reservationService.createReservation({ body: reservationRequest })
+      .subscribe({
+        next: (response) => {
+          console.log('Reservation Response:', response);
+          
+          this.messageService.add({
+            severity: 'success', 
+            summary: 'Reservation Successful', 
+            detail: `Vehicle reserved from ${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}`
+          });
+
+          
+          this.rangeDates = []; //reset dates
+          this.isAvailable = undefined; 
+        },
+        error: (error) => {
+          console.error('Reservation Error:', error);
+          
+          this.messageService.add({
+            severity: 'error', 
+            summary: 'Reservation Failed', 
+            detail: error.error?.message || 'Failed to make reservation. Please try again.'
+          });
+        }
+      });
+  },
+  reject: () => {
+    // User canceled the reservation
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Canceled',
+      detail: 'Reservation canceled'
     });
+  }
+});
 }
   private formatDateForBackend(date: Date): string {
     /// Use toISOString() to match the exact format
