@@ -19,6 +19,8 @@ import { getAllVehicles } from '../fn/vehicle-controller/get-all-vehicles';
 import { GetAllVehicles$Params } from '../fn/vehicle-controller/get-all-vehicles';
 import { getVehicleById } from '../fn/vehicle-controller/get-vehicle-by-id';
 import { GetVehicleById$Params } from '../fn/vehicle-controller/get-vehicle-by-id';
+import { getVehicleImage } from '../fn/vehicle-controller/get-vehicle-image';
+import { GetVehicleImage$Params } from '../fn/vehicle-controller/get-vehicle-image';
 import { updateVehicle } from '../fn/vehicle-controller/update-vehicle';
 import { UpdateVehicle$Params } from '../fn/vehicle-controller/update-vehicle';
 import { VehicleEntity } from '../models/vehicle-entity';
@@ -137,9 +139,9 @@ export class VehicleControllerService extends BaseService {
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
    * To access only the response body, use `createVehicle()` instead.
    *
-   * This method sends `application/json` and handles request body of type `application/json`.
+   * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
    */
-  createVehicle$Response(params: CreateVehicle$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+  createVehicle$Response(params?: CreateVehicle$Params, context?: HttpContext): Observable<StrictHttpResponse<{
 }>> {
     return createVehicle(this.http, this.rootUrl, params, context);
   }
@@ -148,14 +150,39 @@ export class VehicleControllerService extends BaseService {
    * This method provides access only to the response body.
    * To access the full response (for headers, for example), `createVehicle$Response()` instead.
    *
-   * This method sends `application/json` and handles request body of type `application/json`.
+   * This method sends `multipart/form-data` and handles request body of type `multipart/form-data`.
    */
-  createVehicle(params: CreateVehicle$Params, context?: HttpContext): Observable<{
+  createVehicle(params?: CreateVehicle$Params, context?: HttpContext): Observable<{
 }> {
     return this.createVehicle$Response(params, context).pipe(
       map((r: StrictHttpResponse<{
 }>): {
 } => r.body)
+    );
+  }
+
+  /** Path part for operation `getVehicleImage()` */
+  static readonly GetVehicleImagePath = '/api/vehicles/image/{vehicleId}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getVehicleImage()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getVehicleImage$Response(params: GetVehicleImage$Params, context?: HttpContext): Observable<StrictHttpResponse<Blob>> {
+    return getVehicleImage(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getVehicleImage$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getVehicleImage(params: GetVehicleImage$Params, context?: HttpContext): Observable<Blob> {
+    return this.getVehicleImage$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Blob>): Blob => r.body)
     );
   }
 

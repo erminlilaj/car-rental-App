@@ -9,22 +9,24 @@ import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
 
-export interface IsAdmin$Params {
+export interface GetVehicleImage$Params {
+  imagePath: string;
 }
 
-export function isAdmin(http: HttpClient, rootUrl: string, params?: IsAdmin$Params, context?: HttpContext): Observable<StrictHttpResponse<boolean>> {
-  const rb = new RequestBuilder(rootUrl, isAdmin.PATH, 'get');
+export function getVehicleImage(http: HttpClient, rootUrl: string, params: GetVehicleImage$Params, context?: HttpContext): Observable<StrictHttpResponse<Blob>> {
+  const rb = new RequestBuilder(rootUrl, getVehicleImage.PATH, 'get');
   if (params) {
+    rb.query('imagePath', params.imagePath, {});
   }
 
   return http.request(
-    rb.build({ responseType: 'json', accept: 'application/json', context })
+    rb.build({ responseType: 'blob', accept: '*/*', context })
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return (r as HttpResponse<any>).clone({ body: String((r as HttpResponse<any>).body) === 'true' }) as StrictHttpResponse<boolean>;
+      return r as StrictHttpResponse<Blob>;
     })
   );
 }
 
-isAdmin.PATH = '/auth/isAdmin';
+getVehicleImage.PATH = '/api/vehicles/image/{vehicleId}';

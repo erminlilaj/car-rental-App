@@ -22,12 +22,11 @@ export function authenticate(http: HttpClient, rootUrl: string, params: Authenti
   }
 
   return http.request(
-    rb.build({ responseType: 'text', accept: '*/*', context })
+    rb.build({ responseType: 'json', accept: 'application/json', context })
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r.body as StrictHttpResponse<{
-        token: string; // Adjust based on your API's response format
+      return r as StrictHttpResponse<{
       }>;
     })
   );

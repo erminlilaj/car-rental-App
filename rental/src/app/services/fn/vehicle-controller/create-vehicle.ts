@@ -11,14 +11,17 @@ import { RequestBuilder } from '../../request-builder';
 import { CreateVehicleRequest } from '../../models/create-vehicle-request';
 
 export interface CreateVehicle$Params {
-      body: CreateVehicleRequest
+      body?: {
+'vehicleData': CreateVehicleRequest;
+'image'?: Blob;
+}
 }
 
-export function createVehicle(http: HttpClient, rootUrl: string, params: CreateVehicle$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+export function createVehicle(http: HttpClient, rootUrl: string, params?: CreateVehicle$Params, context?: HttpContext): Observable<StrictHttpResponse<{
 }>> {
   const rb = new RequestBuilder(rootUrl, createVehicle.PATH, 'post');
   if (params) {
-    rb.body(params.body, 'application/json');
+    rb.body(params.body, 'multipart/form-data');
   }
 
   return http.request(

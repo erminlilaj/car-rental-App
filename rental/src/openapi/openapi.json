@@ -225,7 +225,7 @@
                     "200": {
                         "description": "OK",
                         "content": {
-                            "*/*": {
+                            "application/json": {
                                 "schema": {
                                     "type": "object"
                                 }
@@ -255,7 +255,7 @@
                     "200": {
                         "description": "OK",
                         "content": {
-                            "*/*": {
+                            "application/json": {
                                 "schema": {
                                     "type": "object"
                                 }
@@ -294,13 +294,24 @@
                 "operationId": "createVehicle",
                 "requestBody": {
                     "content": {
-                        "application/json": {
+                        "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/CreateVehicleRequest"
+                                "required": [
+                                    "vehicleData"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "vehicleData": {
+                                        "$ref": "#/components/schemas/CreateVehicleRequest"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
                             }
                         }
-                    },
-                    "required": true
+                    }
                 },
                 "responses": {
                     "200": {
@@ -387,7 +398,7 @@
                     "200": {
                         "description": "OK",
                         "content": {
-                            "*/*": {
+                            "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ReservationResponse"
                                 }
@@ -417,7 +428,7 @@
                     "200": {
                         "description": "OK",
                         "content": {
-                            "*/*": {
+                            "application/json": {
                                 "schema": {
                                     "type": "boolean"
                                 }
@@ -437,7 +448,7 @@
                     "200": {
                         "description": "OK",
                         "content": {
-                            "*/*": {
+                            "application/json": {
                                 "schema": {
                                     "type": "integer",
                                     "format": "int64"
@@ -458,9 +469,40 @@
                     "200": {
                         "description": "OK",
                         "content": {
-                            "*/*": {
+                            "application/json": {
                                 "schema": {
                                     "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/vehicles/image/{vehicleId}": {
+            "get": {
+                "tags": [
+                    "vehicle-controller"
+                ],
+                "operationId": "getVehicleImage",
+                "parameters": [
+                    {
+                        "name": "imagePath",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
                                 }
                             }
                         }
@@ -478,7 +520,7 @@
                     "200": {
                         "description": "OK",
                         "content": {
-                            "*/*": {
+                            "application/json": {
                                 "schema": {
                                     "type": "array",
                                     "items": {
@@ -512,7 +554,7 @@
                     "200": {
                         "description": "OK",
                         "content": {
-                            "*/*": {
+                            "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ReservationResponse"
                                 }
@@ -542,7 +584,7 @@
                     "200": {
                         "description": "OK",
                         "content": {
-                            "*/*": {
+                            "application/json": {
                                 "schema": {
                                     "type": "array",
                                     "items": {
@@ -565,7 +607,7 @@
                     "200": {
                         "description": "OK",
                         "content": {
-                            "*/*": {
+                            "application/json": {
                                 "schema": {
                                     "type": "array",
                                     "items": {
@@ -599,7 +641,7 @@
                     "200": {
                         "description": "OK",
                         "content": {
-                            "*/*": {
+                            "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ReservationResponse"
                                 }
@@ -692,6 +734,9 @@
                     "deletedAt": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "imagePath": {
+                        "type": "string"
                     }
                 }
             },

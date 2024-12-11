@@ -11,6 +11,7 @@ export interface VehicleEntity {
   fuelType?: 'DIESEL' | 'PETROL' | 'ELECTRIC';
   gearboxType?: 'AUTOMATIC' | 'MANUAL';
   id?: number;
+  imagePath?: string;
   model?: string;
   updatedAt?: string;
   vehicleStatus?: 'AVAILABLE' | 'MAINTENANCE';
