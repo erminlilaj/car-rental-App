@@ -6,6 +6,7 @@ import{AuthenticationControllerService} from '../../services/services/authentica
 import {Router} from '@angular/router';
 import{Authenticate$Params} from '../../services/fn/authentication-controller/authenticate';
 import {register} from '../../services/fn/authentication-controller/register';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -35,8 +36,19 @@ login() {
     (token: any) => {
       console.log('Login successful. Token:', token);
       localStorage.setItem('authToken', token);
-     // this.router.navigate(['/dashboard']); // Navigate after successful login
-     this.router.navigate(['/homepage']);
+      this.authService.isAdmin().subscribe({
+        next: (isAdmin: boolean) => {
+          if (isAdmin) {
+            this.router.navigate(['admin']);
+          } else {
+            this.router.navigate(['homepage']);
+          }
+        },
+        error: (error) => {
+          console.error('Failed to check admin status:', error);
+          this.errorMsg.push('Failed to check admin status.');
+        },
+      });
     },
     (error) => {
       console.error('Login failed:', error);

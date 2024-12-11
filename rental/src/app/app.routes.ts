@@ -8,6 +8,9 @@ import { Component } from '@angular/core';
 import { NavbarComponent } from './layout/navbar/navbar.component';
 import { FullComponent } from './layout/full/full.component';
 import { ReservationComponent } from './pages/reservation/reservation.component';
+import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
+import { CanActivateFn } from '@angular/router';
+import { adminGuard } from './guard/admin.guard';
 
 
 export const routes: Routes = [
@@ -31,14 +34,19 @@ export const routes: Routes = [
       path: '',
       component: ReservationsListComponent
     }
-  ]}
+  ]},
 
-  // { path: '/user/dashboard', component: FullComponent, children: [
-  //   {
-  //     path: '',
-  //     component: LoginComponent
-  //   }
-  // ] }
+  {
+    path: 'admin',
+    component: FullComponent,
+    canActivate: [adminGuard], 
+    children: [
+      {
+        path: '',
+        component: AdminDashboardComponent
+      }
+    ]
+  }
 
 ];
 

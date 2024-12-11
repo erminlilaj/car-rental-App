@@ -448,6 +448,26 @@
                 }
             }
         },
+        "/auth/isAdmin": {
+            "get": {
+                "tags": [
+                    "authentication-controller"
+                ],
+                "operationId": "isAdmin",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "boolean"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/reservations": {
             "get": {
                 "tags": [
@@ -749,13 +769,13 @@
                             "$ref": "#/components/schemas/GrantedAuthority"
                         }
                     },
+                    "accountNonExpired": {
+                        "type": "boolean"
+                    },
                     "accountNonLocked": {
                         "type": "boolean"
                     },
                     "credentialsNonExpired": {
-                        "type": "boolean"
-                    },
-                    "accountNonExpired": {
                         "type": "boolean"
                     },
                     "enabled": {

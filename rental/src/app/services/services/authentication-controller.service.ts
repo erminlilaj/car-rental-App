@@ -15,6 +15,8 @@ import { authenticate } from '../fn/authentication-controller/authenticate';
 import { Authenticate$Params } from '../fn/authentication-controller/authenticate';
 import { getLoggedUserId } from '../fn/authentication-controller/get-logged-user-id';
 import { GetLoggedUserId$Params } from '../fn/authentication-controller/get-logged-user-id';
+import { isAdmin } from '../fn/authentication-controller/is-admin';
+import { IsAdmin$Params } from '../fn/authentication-controller/is-admin';
 import { register } from '../fn/authentication-controller/register';
 import { Register$Params } from '../fn/authentication-controller/register';
 
@@ -109,6 +111,31 @@ export class AuthenticationControllerService extends BaseService {
   getLoggedUserId(params?: GetLoggedUserId$Params, context?: HttpContext): Observable<number> {
     return this.getLoggedUserId$Response(params, context).pipe(
       map((r: StrictHttpResponse<number>): number => r.body)
+    );
+  }
+
+  /** Path part for operation `isAdmin()` */
+  static readonly IsAdminPath = '/auth/isAdmin';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `isAdmin()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  isAdmin$Response(params?: IsAdmin$Params, context?: HttpContext): Observable<StrictHttpResponse<boolean>> {
+    return isAdmin(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `isAdmin$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  isAdmin(params?: IsAdmin$Params, context?: HttpContext): Observable<boolean> {
+    return this.isAdmin$Response(params, context).pipe(
+      map((r: StrictHttpResponse<boolean>): boolean => r.body)
     );
   }
 
