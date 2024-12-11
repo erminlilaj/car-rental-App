@@ -13,7 +13,7 @@ export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(authReq).pipe(
     catchError((error) => {
-      if (error.status === 401) {
+      if (error.status === 403) {
         localStorage.removeItem('authToken'); // Clear token
         router.navigate(['/login']); // Redirect to login
       }

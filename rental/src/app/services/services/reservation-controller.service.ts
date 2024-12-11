@@ -21,6 +21,8 @@ import { getAllReservations } from '../fn/reservation-controller/get-all-reserva
 import { GetAllReservations$Params } from '../fn/reservation-controller/get-all-reservations';
 import { getReservationById } from '../fn/reservation-controller/get-reservation-by-id';
 import { GetReservationById$Params } from '../fn/reservation-controller/get-reservation-by-id';
+import { getReservationListOfUser } from '../fn/reservation-controller/get-reservation-list-of-user';
+import { GetReservationListOfUser$Params } from '../fn/reservation-controller/get-reservation-list-of-user';
 import { getReservationStatistics } from '../fn/reservation-controller/get-reservation-statistics';
 import { GetReservationStatistics$Params } from '../fn/reservation-controller/get-reservation-statistics';
 import { ReservationResponse } from '../models/reservation-response';
@@ -154,6 +156,31 @@ export class ReservationControllerService extends BaseService {
   getReservationStatistics(params: GetReservationStatistics$Params, context?: HttpContext): Observable<Array<ReservationStatisticsResponse>> {
     return this.getReservationStatistics$Response(params, context).pipe(
       map((r: StrictHttpResponse<Array<ReservationStatisticsResponse>>): Array<ReservationStatisticsResponse> => r.body)
+    );
+  }
+
+  /** Path part for operation `getReservationListOfUser()` */
+  static readonly GetReservationListOfUserPath = '/api/reservations/reservation-list';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getReservationListOfUser()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getReservationListOfUser$Response(params?: GetReservationListOfUser$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<ReservationResponse>>> {
+    return getReservationListOfUser(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getReservationListOfUser$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getReservationListOfUser(params?: GetReservationListOfUser$Params, context?: HttpContext): Observable<Array<ReservationResponse>> {
+    return this.getReservationListOfUser$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<ReservationResponse>>): Array<ReservationResponse> => r.body)
     );
   }
 

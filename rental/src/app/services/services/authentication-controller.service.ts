@@ -13,6 +13,8 @@ import { StrictHttpResponse } from '../strict-http-response';
 
 import { authenticate } from '../fn/authentication-controller/authenticate';
 import { Authenticate$Params } from '../fn/authentication-controller/authenticate';
+import { getLoggedUserId } from '../fn/authentication-controller/get-logged-user-id';
+import { GetLoggedUserId$Params } from '../fn/authentication-controller/get-logged-user-id';
 import { register } from '../fn/authentication-controller/register';
 import { Register$Params } from '../fn/authentication-controller/register';
 
@@ -82,6 +84,31 @@ export class AuthenticationControllerService extends BaseService {
       map((r: StrictHttpResponse<{
 }>): {
 } => r.body)
+    );
+  }
+
+  /** Path part for operation `getLoggedUserId()` */
+  static readonly GetLoggedUserIdPath = '/auth/userId';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getLoggedUserId()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getLoggedUserId$Response(params?: GetLoggedUserId$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
+    return getLoggedUserId(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getLoggedUserId$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getLoggedUserId(params?: GetLoggedUserId$Params, context?: HttpContext): Observable<number> {
+    return this.getLoggedUserId$Response(params, context).pipe(
+      map((r: StrictHttpResponse<number>): number => r.body)
     );
   }
 

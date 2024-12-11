@@ -31,7 +31,7 @@ export function authenticate(http: HttpClient, rootUrl: string, params: Authenti
       }>;
     })
   );
-  
+
 }
 
 authenticate.PATH = '/auth/login';

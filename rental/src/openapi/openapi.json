@@ -427,6 +427,27 @@
                 }
             }
         },
+        "/auth/userId": {
+            "get": {
+                "tags": [
+                    "authentication-controller"
+                ],
+                "operationId": "getLoggedUserId",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "integer",
+                                    "format": "int64"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/reservations": {
             "get": {
                 "tags": [
@@ -506,6 +527,29 @@
                                     "type": "array",
                                     "items": {
                                         "$ref": "#/components/schemas/ReservationStatisticsResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/reservations/reservation-list": {
+            "get": {
+                "tags": [
+                    "reservation-controller"
+                ],
+                "operationId": "getReservationListOfUser",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ReservationResponse"
                                     }
                                 }
                             }
@@ -705,13 +749,13 @@
                             "$ref": "#/components/schemas/GrantedAuthority"
                         }
                     },
-                    "accountNonExpired": {
-                        "type": "boolean"
-                    },
                     "accountNonLocked": {
                         "type": "boolean"
                     },
                     "credentialsNonExpired": {
+                        "type": "boolean"
+                    },
+                    "accountNonExpired": {
                         "type": "boolean"
                     },
                     "enabled": {

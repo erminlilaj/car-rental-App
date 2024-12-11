@@ -31,18 +31,22 @@ export class ReservationComponent implements OnInit {
   vehicle?: VehicleEntity;
   isAvailable?: boolean;
 minDate: Date = new Date();
+userId:number;
 // maxDate: Date = new Date();
   constructor(
     private vehicleService: VehicleControllerService,
     private reservationService: ReservationControllerService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService
-  ) {}
+  ) {
+    this.userId=Number(localStorage.getItem('userId')||0);
+  }
 
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     console.log("id is :", id);
+    console.log("user id is:",this.userId);
     this.getVehicleById(id);
     
   }
