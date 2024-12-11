@@ -12,6 +12,9 @@ import { Router } from '@angular/router';
 })
 export class VehicleCardComponent {
   private _vehicle: VehicleEntity = {};
+
+  @Input()isAdmin:boolean=false;
+
   constructor(
    
     private router: Router

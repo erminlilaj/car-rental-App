@@ -8,7 +8,8 @@ import { Component } from '@angular/core';
 import { NavbarComponent } from './layout/navbar/navbar.component';
 import { FullComponent } from './layout/full/full.component';
 import { ReservationComponent } from './pages/reservation/reservation.component';
-import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
+import { AdminDashboardComponent } from './pages/admin/admin-dashboard/admin-dashboard.component';
+import { VehiclesComponent } from './pages/admin/vehicles/vehicles.component';
 import { CanActivateFn } from '@angular/router';
 import { adminGuard } from './guard/admin.guard';
 
@@ -46,7 +47,19 @@ export const routes: Routes = [
         component: AdminDashboardComponent
       }
     ]
+  },
+  {
+  path: 'admin/vehicles',
+    component: FullComponent,
+    canActivate: [adminGuard], 
+    children: [
+      {
+        path: '',
+        component: VehiclesComponent
+      }
+    ]
   }
+  
 
 ];
 
