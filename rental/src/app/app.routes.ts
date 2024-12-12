@@ -10,6 +10,7 @@ import { FullComponent } from './layout/full/full.component';
 import { ReservationComponent } from './pages/reservation/reservation.component';
 import { AdminDashboardComponent } from './pages/admin/admin-dashboard/admin-dashboard.component';
 import { VehiclesComponent } from './pages/admin/vehicles/vehicles.component';
+import { AddVehicleComponent } from './pages/add-vehicle/add-vehicle.component';
 import { CanActivateFn } from '@angular/router';
 import { adminGuard } from './guard/admin.guard';
 
@@ -58,7 +59,8 @@ export const routes: Routes = [
         component: VehiclesComponent
       }
     ]
-  }
+  },
+  {path: 'add-vehicle', component: AddVehicleComponent, canActivate:[adminGuard]}
   
 
 ];

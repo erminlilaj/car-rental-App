@@ -37,7 +37,7 @@ export class VehicleCardComponent implements OnInit {
   ngOnInit(): void {}
 
   private fetchVehicleImage(imagePath: string): void {
-    const params: GetVehicleImage$Params = { imagePath }; // Create the expected parameter object
+    const params: GetVehicleImage$Params = { imagePath }; 
     this.vehicleService.getVehicleImage(params).subscribe({
       next: (imageBlob) => {
         const reader = new FileReader();
@@ -47,8 +47,8 @@ export class VehicleCardComponent implements OnInit {
         reader.readAsDataURL(imageBlob); // Convert Blob to data URL
       },
       error: () => {
-        console.error('Failed to fetch vehicle image');
-        this.imageUrl = 'https://via.placeholder.com/150'; // Fallback image
+        console.error('Failed to fetch vehicle image.');
+        
       },
     });
   }

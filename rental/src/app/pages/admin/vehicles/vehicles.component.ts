@@ -4,6 +4,7 @@ import { VehicleCardComponent } from '../../../app-shared-components/vehicle-car
 import { VehicleEntity } from '../../../services/models';
 import { VehicleControllerService } from '../../../services/services';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { AuthenticationControllerService } from '../../../services/services';
 
 @Component({
@@ -18,6 +19,7 @@ export class VehiclesComponent  implements OnInit {
   isAdmin: boolean=false;
 
   constructor(private vehicleService: VehicleControllerService,
+    private router: Router,
     private authService: AuthenticationControllerService,
   ) {this.authService.isAdmin().subscribe({
     next:(isAdmin:boolean)=>{
@@ -51,5 +53,8 @@ export class VehiclesComponent  implements OnInit {
         console.error('Failed to fetch vehicles:', error);
       }
     );
+  }
+  addVehicle():void{
+    this.router.navigate(['add-vehicle']);
   }
 }
