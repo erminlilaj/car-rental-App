@@ -25,6 +25,8 @@ import { getReservationListOfUser } from '../fn/reservation-controller/get-reser
 import { GetReservationListOfUser$Params } from '../fn/reservation-controller/get-reservation-list-of-user';
 import { getReservationStatistics } from '../fn/reservation-controller/get-reservation-statistics';
 import { GetReservationStatistics$Params } from '../fn/reservation-controller/get-reservation-statistics';
+import { listOfActiveOrFutureReservations } from '../fn/reservation-controller/list-of-active-or-future-reservations';
+import { ListOfActiveOrFutureReservations$Params } from '../fn/reservation-controller/list-of-active-or-future-reservations';
 import { ReservationResponse } from '../models/reservation-response';
 import { ReservationStatisticsResponse } from '../models/reservation-statistics-response';
 
@@ -131,6 +133,31 @@ export class ReservationControllerService extends BaseService {
   getReservationById(params: GetReservationById$Params, context?: HttpContext): Observable<ReservationResponse> {
     return this.getReservationById$Response(params, context).pipe(
       map((r: StrictHttpResponse<ReservationResponse>): ReservationResponse => r.body)
+    );
+  }
+
+  /** Path part for operation `listOfActiveOrFutureReservations()` */
+  static readonly ListOfActiveOrFutureReservationsPath = '/api/reservations/vehicle-reservations/{id}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `listOfActiveOrFutureReservations()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  listOfActiveOrFutureReservations$Response(params: ListOfActiveOrFutureReservations$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<ReservationResponse>>> {
+    return listOfActiveOrFutureReservations(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `listOfActiveOrFutureReservations$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  listOfActiveOrFutureReservations(params: ListOfActiveOrFutureReservations$Params, context?: HttpContext): Observable<Array<ReservationResponse>> {
+    return this.listOfActiveOrFutureReservations$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<ReservationResponse>>): Array<ReservationResponse> => r.body)
     );
   }
 

@@ -10,9 +10,10 @@
     <a *ngIf="isAdmin" (click)="onReservation(vehicle.id)" class="btn btn-primary">
       Edit
     </a>
-    <a *ngIf="isAdmin" (click)="onReservation(vehicle.id)" class="btn btn-danger">
+    <a *ngIf="isAdmin" (click)="onDelete(vehicle.id)" class="btn btn-danger">
       Delete
     </a>
-   
+    <p-confirmDialog></p-confirmDialog>
+
   </div>
 </div>

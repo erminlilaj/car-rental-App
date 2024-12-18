@@ -564,6 +564,40 @@
                 }
             }
         },
+        "/api/reservations/vehicle-reservations/{id}": {
+            "get": {
+                "tags": [
+                    "reservation-controller"
+                ],
+                "operationId": "listOfActiveOrFutureReservations",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ReservationResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/reservations/statistics/{MM-yyyy}": {
             "get": {
                 "tags": [
