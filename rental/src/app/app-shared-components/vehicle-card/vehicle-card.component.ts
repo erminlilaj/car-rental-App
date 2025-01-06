@@ -12,6 +12,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DynamicDialogModule, DialogService, DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 import { ButtonModule } from 'primeng/button';
 import { ReservationListComponent } from '../reservation-list/reservation-list.component';
+import { EditVehicleComponent } from '../edit-vehicle/edit-vehicle.component';
+
 @Component({
   selector: 'app-vehicle-card',
   imports: [CommonModule,
@@ -55,7 +57,7 @@ export class VehicleCardComponent implements OnInit {
   ngOnInit(): void {}
 
   private fetchVehicleImage(imagePath: string): void {
-    const params: GetVehicleImage$Params = { imagePath }; 
+    const params: GetVehicleImage$Params = { imagePath };
     this.vehicleService.getVehicleImage(params).subscribe({
       next: (imageBlob) => {
         const reader = new FileReader();
@@ -66,11 +68,11 @@ export class VehicleCardComponent implements OnInit {
       },
       error: () => {
         console.error('Failed to fetch vehicle image.');
-        
+
       },
     });
   }
-  
+
 
   onReservation(vehicleId: number | undefined) {
     console.log('button clicked', vehicleId);
@@ -92,18 +94,18 @@ export class VehicleCardComponent implements OnInit {
     next: (reservations) => {
       const dialogRef = this.dialogService.open(ReservationListComponent, {
         header: 'Active or future reservations of this vehicle',
-        width: '70%',
+        width: '80%',
         data: {
           reservations,
           vehicleId,
         },
       });
 
-      
+
       dialogRef.onClose.subscribe((deleteConfirmed: boolean) => {
-       
+
         if (deleteConfirmed) {
-        
+
           this.confirmVehicleDeletion(vehicleId);
         }
       });
@@ -120,7 +122,7 @@ export class VehicleCardComponent implements OnInit {
 
 
 private confirmVehicleDeletion(vehicleId: number): void {
-  console.log("calling this");
+
   this.confirmationService.confirm({
     message: 'Are you sure you want to delete this vehicle?',
     header: 'Confirm Deletion',
@@ -133,7 +135,7 @@ private confirmVehicleDeletion(vehicleId: number): void {
             summary: 'Success',
             detail: 'Vehicle Deleted Successfully',
           });
-          window.location.reload(); 
+          window.location.reload();
         },
         error: () => {
           this.messageService.add({
@@ -154,4 +156,28 @@ private confirmVehicleDeletion(vehicleId: number): void {
   });
 }
 
+onEdit(vehicleId: number | undefined) {
+  if (vehicleId === undefined) {
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'Vehicle ID is undefined',
+    });
+    return;
+  }
+
+  const dialogRef = this.dialogService.open(EditVehicleComponent, {
+    header: 'Edit Vehicle',
+    width: '500px',
+    data: {
+      vehicleId
+    }
+  });
+
+  dialogRef.onClose.subscribe((updated: boolean) => {
+    if (updated) {
+      window.location.reload();
+    }
+  });
+}
 }
