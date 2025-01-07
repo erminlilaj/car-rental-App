@@ -9,6 +9,7 @@ export interface VehicleResponse {
   fuelType?: 'DIESEL' | 'PETROL' | 'ELECTRIC';
   gearboxType?: 'AUTOMATIC' | 'MANUAL';
   id?: number;
+  imagePath?: string;
   model?: string;
   vehicleStatus?: 'AVAILABLE' | 'MAINTENANCE';
   year?: number;

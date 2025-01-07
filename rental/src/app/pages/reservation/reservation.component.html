@@ -2,12 +2,15 @@
   <div class="row align-items-center">
     <!-- Image on the Left -->
     <div class="col-md-4" >
-      <img src="https://picsum.photos/200" class="img-fluid" alt="Vehicle Image">
+      <img [src]="imageUrl" class="img-fluid" alt="Vehicle Image">
     </div>
     <!-- Info on the Right -->
     <div class="col-md-8">
       <h5 *ngIf="vehicle">{{ vehicle.brand }} {{ vehicle.model }}</h5>
+      <p *ngIf="vehicle">Year: {{ vehicle.year }}</p>
       <p *ngIf="vehicle">Gearboox: {{ vehicle.gearboxType }}</p>
+      <p *ngIf="vehicle">Fuel: {{ vehicle.fuelType }}</p>
+      <p *ngIf="vehicle">Color: {{ vehicle.color }}</p>
       <p *ngIf="vehicle">Daily Fee: ${{ vehicle.dailyFee }}</p>
       
 

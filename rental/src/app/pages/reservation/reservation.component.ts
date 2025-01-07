@@ -10,7 +10,7 @@ import { MessageModule } from 'primeng/message';
 import { ToastModule } from 'primeng/toast';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
-
+import { GetVehicleImage$Params } from '../../services/fn/vehicle-controller/get-vehicle-image';
 
 @Component({
   selector: 'app-reservation',
@@ -31,6 +31,7 @@ export class ReservationComponent implements OnInit {
   private route = inject(ActivatedRoute);
   vehicle?: VehicleEntity;
   isAvailable?: boolean;
+  imageUrl: string = ''; 
 minDate: Date = new Date();
 userId:number;
 // maxDate: Date = new Date();
@@ -51,14 +52,34 @@ userId:number;
     this.getVehicleById(id);
     
   }
-
+ 
   private getVehicleById(id: number): void {
     this.vehicleService.getVehicleById({ id }).subscribe(
       (response) => {
         this.vehicle = response;
         console.log(response);
+        if(this.vehicle?.imagePath){
+          this.fetchVehicleImage(this.vehicle.imagePath);
+      }
+   
       }
     );
+  }
+  private fetchVehicleImage(imagePath: string): void {
+    const params: GetVehicleImage$Params = { imagePath };
+    this.vehicleService.getVehicleImage(params).subscribe({
+      next: (imageBlob) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.imageUrl = reader.result as string; // Assign the image data URL
+        };
+        reader.readAsDataURL(imageBlob); // Convert Blob to data URL
+      },
+      error: () => {
+        console.error('Failed to fetch vehicle image.');
+
+      },
+    });
   }
 
   checkAvailability():void {

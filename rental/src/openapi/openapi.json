@@ -1077,6 +1077,9 @@
                     "dailyFee": {
                         "type": "number",
                         "format": "double"
+                    },
+                    "imagePath": {
+                        "type": "string"
                     }
                 }
             },
