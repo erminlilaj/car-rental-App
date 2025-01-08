@@ -1,11 +1,13 @@
 .vehicle-list {
-    display: flex;
-    flex-wrap: wrap; /* Allows wrapping to the next row if there are too many cards */
-    justify-content: space-around; /* Adjusts spacing between cards */
-  }
-  
-  app-vehicle-card {
-    margin: 10px; /* space between the cards */
-    flex: 1 0 21%; /* Makes cards take up about 21% of the container width, adjust as needed */
-  }
-  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start; /* Changed from space-around to flex-start */
+  gap: 50px; /* Using gap instead of margin for consistent spacing */
+  padding: 30px; /* Add some padding around the container */
+}
+
+app-vehicle-card {
+  flex: 0 0 400px; /* Fixed width of 300px, no growing or shrinking */
+  max-width: 300px; /* Ensures consistent max width */
+  margin: 0; /* Remove margin since we're using gap */
+}

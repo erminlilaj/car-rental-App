@@ -15,6 +15,8 @@ import { cancelReservation } from '../fn/reservation-controller/cancel-reservati
 import { CancelReservation$Params } from '../fn/reservation-controller/cancel-reservation';
 import { checkReservationAvailability } from '../fn/reservation-controller/check-reservation-availability';
 import { CheckReservationAvailability$Params } from '../fn/reservation-controller/check-reservation-availability';
+import { countReservationsStatuses } from '../fn/reservation-controller/count-reservations-statuses';
+import { CountReservationsStatuses$Params } from '../fn/reservation-controller/count-reservations-statuses';
 import { createReservation } from '../fn/reservation-controller/create-reservation';
 import { CreateReservation$Params } from '../fn/reservation-controller/create-reservation';
 import { getAllReservations } from '../fn/reservation-controller/get-all-reservations';
@@ -29,6 +31,8 @@ import { listOfActiveOrFutureReservations } from '../fn/reservation-controller/l
 import { ListOfActiveOrFutureReservations$Params } from '../fn/reservation-controller/list-of-active-or-future-reservations';
 import { ReservationResponse } from '../models/reservation-response';
 import { ReservationStatisticsResponse } from '../models/reservation-statistics-response';
+import { sumReservationsProfits } from '../fn/reservation-controller/sum-reservations-profits';
+import { SumReservationsProfits$Params } from '../fn/reservation-controller/sum-reservations-profits';
 
 @Injectable({ providedIn: 'root' })
 export class ReservationControllerService extends BaseService {
@@ -161,6 +165,43 @@ export class ReservationControllerService extends BaseService {
     );
   }
 
+  /** Path part for operation `countReservationsStatuses()` */
+  static readonly CountReservationsStatusesPath = '/api/reservations/statuses';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `countReservationsStatuses()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  countReservationsStatuses$Response(params?: CountReservationsStatuses$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+[key: string]: {
+};
+}>> {
+    return countReservationsStatuses(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `countReservationsStatuses$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  countReservationsStatuses(params?: CountReservationsStatuses$Params, context?: HttpContext): Observable<{
+[key: string]: {
+};
+}> {
+    return this.countReservationsStatuses$Response(params, context).pipe(
+      map((r: StrictHttpResponse<{
+[key: string]: {
+};
+}>): {
+[key: string]: {
+};
+} => r.body)
+    );
+  }
+
   /** Path part for operation `getReservationStatistics()` */
   static readonly GetReservationStatisticsPath = '/api/reservations/statistics/{MM-yyyy}';
 
@@ -208,6 +249,43 @@ export class ReservationControllerService extends BaseService {
   getReservationListOfUser(params?: GetReservationListOfUser$Params, context?: HttpContext): Observable<Array<ReservationResponse>> {
     return this.getReservationListOfUser$Response(params, context).pipe(
       map((r: StrictHttpResponse<Array<ReservationResponse>>): Array<ReservationResponse> => r.body)
+    );
+  }
+
+  /** Path part for operation `sumReservationsProfits()` */
+  static readonly SumReservationsProfitsPath = '/api/reservations/profits';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `sumReservationsProfits()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  sumReservationsProfits$Response(params?: SumReservationsProfits$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+[key: string]: {
+};
+}>> {
+    return sumReservationsProfits(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `sumReservationsProfits$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  sumReservationsProfits(params?: SumReservationsProfits$Params, context?: HttpContext): Observable<{
+[key: string]: {
+};
+}> {
+    return this.sumReservationsProfits$Response(params, context).pipe(
+      map((r: StrictHttpResponse<{
+[key: string]: {
+};
+}>): {
+[key: string]: {
+};
+} => r.body)
     );
   }
 

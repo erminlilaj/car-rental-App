@@ -479,6 +479,29 @@
                 }
             }
         },
+        "/api/vehicles/statuses": {
+            "get": {
+                "tags": [
+                    "vehicle-controller"
+                ],
+                "operationId": "countVehicleStatuses",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/vehicles/image/{vehicleId}": {
             "get": {
                 "tags": [
@@ -598,6 +621,29 @@
                 }
             }
         },
+        "/api/reservations/statuses": {
+            "get": {
+                "tags": [
+                    "reservation-controller"
+                ],
+                "operationId": "countReservationsStatuses",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/reservations/statistics/{MM-yyyy}": {
             "get": {
                 "tags": [
@@ -646,6 +692,29 @@
                                     "type": "array",
                                     "items": {
                                         "$ref": "#/components/schemas/ReservationResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/reservations/profits": {
+            "get": {
+                "tags": [
+                    "reservation-controller"
+                ],
+                "operationId": "sumReservationsProfits",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "object"
                                     }
                                 }
                             }

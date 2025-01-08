@@ -11,6 +11,8 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
+import { countVehicleStatuses } from '../fn/vehicle-controller/count-vehicle-statuses';
+import { CountVehicleStatuses$Params } from '../fn/vehicle-controller/count-vehicle-statuses';
 import { createVehicle } from '../fn/vehicle-controller/create-vehicle';
 import { CreateVehicle$Params } from '../fn/vehicle-controller/create-vehicle';
 import { deleteVehicle } from '../fn/vehicle-controller/delete-vehicle';
@@ -157,6 +159,43 @@ export class VehicleControllerService extends BaseService {
     return this.createVehicle$Response(params, context).pipe(
       map((r: StrictHttpResponse<{
 }>): {
+} => r.body)
+    );
+  }
+
+  /** Path part for operation `countVehicleStatuses()` */
+  static readonly CountVehicleStatusesPath = '/api/vehicles/statuses';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `countVehicleStatuses()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  countVehicleStatuses$Response(params?: CountVehicleStatuses$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+[key: string]: {
+};
+}>> {
+    return countVehicleStatuses(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `countVehicleStatuses$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  countVehicleStatuses(params?: CountVehicleStatuses$Params, context?: HttpContext): Observable<{
+[key: string]: {
+};
+}> {
+    return this.countVehicleStatuses$Response(params, context).pipe(
+      map((r: StrictHttpResponse<{
+[key: string]: {
+};
+}>): {
+[key: string]: {
+};
 } => r.body)
     );
   }

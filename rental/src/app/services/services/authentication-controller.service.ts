@@ -64,9 +64,14 @@ export class AuthenticationControllerService extends BaseService {
    *
    * This method sends `application/json` and handles request body of type `application/json`.
    */
-  authenticate$Response(params: Authenticate$Params, context?: HttpContext): Observable<StrictHttpResponse<{
-}>> {
-    return authenticate(this.http, this.rootUrl, params, context);
+  authenticate$Response(params: Authenticate$Params, context?: HttpContext): Observable<StrictHttpResponse<string>> {
+    return this.http
+      .post(this.rootUrl + AuthenticationControllerService.AuthenticatePath, params.body, {
+        context,
+        responseType: 'text', // Expect plain text response from backend
+        observe: 'response', // Access full response, including headers
+      })
+      .pipe(map((response) => response as StrictHttpResponse<string>));
   }
 
   /**
