@@ -5,8 +5,9 @@ import { RegisterComponent } from './pages/register/register.component';
 import { HomepageComponent } from './pages/homepage/homepage.component';
 import { ReservationsListComponent } from './pages/reservations-list/reservations-list.component';
 import { Component } from '@angular/core';
-import { NavbarComponent } from './layout/navbar/navbar.component';
+
 import { FullComponent } from './layout/full/full.component';
+import { FullAdminComponent } from './layout/full-admin/full-admin.component';
 import { ReservationComponent } from './pages/reservation/reservation.component';
 import { AdminDashboardComponent } from './pages/admin/admin-dashboard/admin-dashboard.component';
 import { VehiclesComponent } from './pages/admin/vehicles/vehicles.component';
@@ -17,7 +18,7 @@ import { adminGuard } from './guard/admin.guard';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent }, // Login page route
-  //{ path: '**', redirectTo: 'login' },         // Fallback route
+  { path: '', redirectTo: 'login', pathMatch: 'full' },// Fallback route
   {path: 'register', component: RegisterComponent},
   {path: 'homepage', component: FullComponent,children: [
     {
@@ -40,7 +41,7 @@ export const routes: Routes = [
 
   {
     path: 'admin',
-    component: FullComponent,
+    component: FullAdminComponent,
     canActivate: [adminGuard], 
     children: [
       {
@@ -51,7 +52,7 @@ export const routes: Routes = [
   },
   {
   path: 'admin/vehicles',
-    component: FullComponent,
+    component: FullAdminComponent,
     canActivate: [adminGuard], 
     children: [
       {
