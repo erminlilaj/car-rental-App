@@ -19,7 +19,8 @@ export class AdminDashboardComponent implements OnInit {
   cancelledReservations: number=0;
   ongoingReservations: number=0;
   futureReservations: number=0;
-
+profitMade: number=0;
+plannedProfit: number=0;
   vehicleList: VehicleEntity[] = [];
 
   constructor(
@@ -41,6 +42,7 @@ export class AdminDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.countVehicleStatus();
     this.countReservationStatuses();
+    this.getProfits();
   }
 
   
@@ -55,6 +57,19 @@ export class AdminDashboardComponent implements OnInit {
         this.maintenanceVehicle= vehicleStatus['maintenance']||0;
         console.log(`Available vehicles: ${this.availableVehicle}`);
         console.log(`Maintenance vehicless: ${this.maintenanceVehicle}`);
+      },
+      (error) => {
+        console.error('Error fetching vehicle statuses:', error);
+      }
+    );
+  }
+  private getProfits():void {
+    this.reservationService.sumReservationsProfits().subscribe(
+      (response: {[key: string]: {}} )=> {
+        const kProfit= response as {[key: string]: number};
+        this.profitMade=kProfit['profit made'] || 0;
+        this.plannedProfit=kProfit['planned profit'] || 0;
+
       },
       (error) => {
         console.error('Error fetching vehicle statuses:', error);
