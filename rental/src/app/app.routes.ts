@@ -4,6 +4,7 @@ import {LoginComponent} from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { HomepageComponent } from './pages/homepage/homepage.component';
 import { ReservationsListComponent } from './pages/reservations-list/reservations-list.component';
+import { CheckAvailableVehiclesComponent } from './pages/check-available-vehicles/check-available-vehicles.component';
 import { Component } from '@angular/core';
 
 import { FullComponent } from './layout/full/full.component';
@@ -19,6 +20,7 @@ import { adminGuard } from './guard/admin.guard';
 export const routes: Routes = [
   { path: 'login', component: LoginComponent }, // Login page route
   { path: '', redirectTo: 'login', pathMatch: 'full' },// Fallback route
+  {path: 'availableVehicles',component:CheckAvailableVehiclesComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'homepage', component: FullComponent,children: [
     {

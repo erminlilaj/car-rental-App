@@ -21,6 +21,8 @@ import { createReservation } from '../fn/reservation-controller/create-reservati
 import { CreateReservation$Params } from '../fn/reservation-controller/create-reservation';
 import { getAllReservations } from '../fn/reservation-controller/get-all-reservations';
 import { GetAllReservations$Params } from '../fn/reservation-controller/get-all-reservations';
+import { getAvailableVehiclesByDate } from '../fn/reservation-controller/get-available-vehicles-by-date';
+import { GetAvailableVehiclesByDate$Params } from '../fn/reservation-controller/get-available-vehicles-by-date';
 import { getReservationById } from '../fn/reservation-controller/get-reservation-by-id';
 import { GetReservationById$Params } from '../fn/reservation-controller/get-reservation-by-id';
 import { getReservationListOfUser } from '../fn/reservation-controller/get-reservation-list-of-user';
@@ -33,11 +35,37 @@ import { ReservationResponse } from '../models/reservation-response';
 import { ReservationStatisticsResponse } from '../models/reservation-statistics-response';
 import { sumReservationsProfits } from '../fn/reservation-controller/sum-reservations-profits';
 import { SumReservationsProfits$Params } from '../fn/reservation-controller/sum-reservations-profits';
+import { VehicleResponse } from '../models/vehicle-response';
 
 @Injectable({ providedIn: 'root' })
 export class ReservationControllerService extends BaseService {
   constructor(config: ApiConfiguration, http: HttpClient) {
     super(config, http);
+  }
+
+  /** Path part for operation `getAvailableVehiclesByDate()` */
+  static readonly GetAvailableVehiclesByDatePath = '/api/reservations/search-daterange';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getAvailableVehiclesByDate()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  getAvailableVehiclesByDate$Response(params: GetAvailableVehiclesByDate$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<VehicleResponse>>> {
+    return getAvailableVehiclesByDate(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getAvailableVehiclesByDate$Response()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  getAvailableVehiclesByDate(params: GetAvailableVehiclesByDate$Params, context?: HttpContext): Observable<Array<VehicleResponse>> {
+    return this.getAvailableVehiclesByDate$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<VehicleResponse>>): Array<VehicleResponse> => r.body)
+    );
   }
 
   /** Path part for operation `createReservation()` */
