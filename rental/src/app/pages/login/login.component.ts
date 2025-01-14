@@ -41,7 +41,14 @@ login() {
           if (isAdmin) {
             this.router.navigate(['admin']);
           } else {
+            const redirectUrl=localStorage.getItem('redirectUrl');
+            if(redirectUrl){
+              localStorage.removeItem('redirectUrl');
+              this.router.navigateByUrl(redirectUrl);
+            }
+            else{
             this.router.navigate(['homepage']);
+            }
           }
         },
         error: (error) => {

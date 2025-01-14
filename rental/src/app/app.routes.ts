@@ -19,7 +19,8 @@ import { adminGuard } from './guard/admin.guard';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent }, // Login page route
-  { path: '', redirectTo: 'login', pathMatch: 'full' },// Fallback route
+  //{ path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'availableVehicles', pathMatch: 'full' },// Fallback route
   {path: 'availableVehicles',component:CheckAvailableVehiclesComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'homepage', component: FullComponent,children: [

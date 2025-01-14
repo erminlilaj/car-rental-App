@@ -32,6 +32,7 @@ navigateToHomepage(): void{
 }
 logout():void{
   localStorage.removeItem('authToken'); 
+  localStorage.removeItem('redirectUrl');
   this.router.navigate(['/login']);
 }
   navigateToReservations(): void {

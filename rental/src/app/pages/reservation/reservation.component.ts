@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute ,Router} from '@angular/router';
 import { CreateReservationRequest, VehicleEntity } from '../../services/models';
 import { VehicleControllerService, ReservationControllerService } from '../../services/services';
 import { CommonModule } from '@angular/common'; 
@@ -29,6 +29,7 @@ import { GetVehicleImage$Params } from '../../services/fn/vehicle-controller/get
 export class ReservationComponent implements OnInit {
   rangeDates: Date[]=[];
   private route = inject(ActivatedRoute);
+  private router=inject(Router);
   vehicle?: VehicleEntity;
   isAvailable?: boolean;
   imageUrl: string = ''; 
@@ -177,14 +178,14 @@ reserveVehicle():void{
     return;
   }
     const [startDate,endDate]=this.rangeDates;
-//show confirm dialog before sending the request 
+
 this.confirmationService.confirm({
   message: `Are you sure you want to reserve this vehicle from ${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}?`,
   header: 'Confirm Reservation',
   icon: 'pi pi-exclamation-triangle',
 
   accept: () => {
-    
+    localStorage.setItem('redirectUrl',this.router.url);
     const reservationRequest: CreateReservationRequest = {
       vehicleId: this.vehicle?.id,
       startDate: this.formatDateForBackend(startDate),
@@ -195,7 +196,7 @@ this.confirmationService.confirm({
       .subscribe({
         next: (response) => {
           console.log('Reservation Response:', response);
-          
+          localStorage.removeItem('redirectUrl');
           this.messageService.add({
             severity: 'success', 
             summary: 'Reservation Successful', 
