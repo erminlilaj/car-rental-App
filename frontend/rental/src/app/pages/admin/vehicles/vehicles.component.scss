@@ -1,0 +1,13 @@
+.vehicle-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start; /* Changed from space-around to flex-start */
+  gap: 50px; /* Using gap instead of margin for consistent spacing */
+  padding: 30px; /* Add some padding around the container */
+}
+
+app-vehicle-card {
+  flex: 0 0 400px; /* Fixed width of 300px, no growing or shrinking */
+  max-width: 300px; /* Ensures consistent max width */
+  margin: 0; /* Remove margin since we're using gap */
+}

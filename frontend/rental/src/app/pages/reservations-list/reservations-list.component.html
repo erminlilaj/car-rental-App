@@ -1,0 +1,60 @@
+<div class="reservations-container">
+    <h2>My Reservations</h2>
+  
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="loading">
+      <p>Loading reservations...</p>
+    </div>
+  
+    <!-- Error State -->
+    <div *ngIf="error" class="error">
+      <p>{{ error }}</p>
+    </div>
+  
+    <!-- Cancel Error -->
+    <div *ngIf="cancelError" class="cancel-error">
+      <p>{{ cancelError }}</p>
+    </div>
+  
+    <!-- Reservations List -->
+    <div *ngIf="!isLoading && !error">
+      <div *ngIf="reservations.length === 0" class="no-reservations">
+        <p>You have no current reservations.</p>
+      </div>
+  
+      <div *ngIf="reservations.length > 0" class="reservation-list">
+        <div *ngFor="let reservation of reservations" class="reservation-item">
+          <div class="reservation-details">
+            <h3>Reservation Details</h3>
+            <p *ngIf="reservation.vehicleId">
+              <strong>Vehicle ID:</strong> {{ reservation.vehicleId }}
+            </p>
+            <p *ngIf="reservation.vehicleName">
+              <strong>Vehicle Model:</strong> {{ reservation.vehicleName }}
+            </p>
+            <p *ngIf="reservation.startDate">
+              <strong>Start Date:</strong> {{ reservation.startDate | date:'mediumDate' }}
+            </p>
+            <p *ngIf="reservation.endDate">
+              <strong>End Date:</strong> {{ reservation.endDate | date:'mediumDate' }}
+            </p>
+            <p *ngIf="reservation.startDate">
+              <strong>Total price:</strong> {{ reservation.price }}
+            </p>
+            <p *ngIf="reservation.status">
+              <strong>Status:</strong> {{ reservation.status }}
+            </p>
+  
+            
+            <button 
+              *ngIf="isCancellable(reservation)"
+              (click)="cancelReservation(reservation.reservationId)"
+              class="cancel-btn"
+            >
+              Cancel Reservation
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
