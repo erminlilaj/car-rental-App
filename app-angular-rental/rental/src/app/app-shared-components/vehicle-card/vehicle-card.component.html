@@ -1,0 +1,22 @@
+<div class="card vehicle-card" >
+  <div class="image-container">
+  <img [src]="imageUrl" class="card-img-top" alt="Vehicle Image">
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{vehicle.brand}} {{ vehicle.model }}</h5>
+    <p class="card-text">Gearbox: {{ vehicle.gearboxType }}</p>
+    <p class="card-text">Daily Fee: {{ vehicle.dailyFee }}</p>
+    <p *ngIf="isAdmin">Status: {{ vehicle.vehicleStatus }} ID:{{vehicle.id}}</p>
+    <a *ngIf="!isAdmin" (click)="onReservation(vehicle.id)" class="btn btn-primary">
+      Book Now!
+    </a>
+    <a *ngIf="isAdmin" (click)="onEdit(vehicle.id)" class="btn btn-primary">
+      Edit
+    </a>
+    <a *ngIf="isAdmin" (click)="onDelete(vehicle.id)" class="btn btn-danger">
+      Delete
+    </a>
+    <p-confirmDialog></p-confirmDialog>
+
+  </div>
+</div>
